@@ -5,7 +5,7 @@ module RelativeTime
       return '1分钟前' if diff.abs.round <= 59
 
       date_string = verb_agreement(resolution(diff.abs.round))
-      diff >= 0 ? "#{date_string} 前" : "在 #{date_string}"
+      diff >= 0 ? "#{date_string} 前" : "#{date_string}"
     end
 
   private
@@ -33,7 +33,7 @@ module RelativeTime
     end
 
     def verb_agreement(resolution)
-      if resolution[0] == 1 && resolution.last == '消息'
+      if resolution[0] == 1 && resolution.last == '小时'
         '小时'
       elsif resolution[0] == 1
         resolution.last[0...-1]
