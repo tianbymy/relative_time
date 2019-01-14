@@ -2,10 +2,10 @@ module RelativeTime
   class InWords
     def call(date_to, date_from)
       diff = date_from.to_time - date_to.to_time
-      return 'less than a minute' if diff.abs.round <= 59
+      return '1分钟前' if diff.abs.round <= 59
 
       date_string = verb_agreement(resolution(diff.abs.round))
-      diff >= 0 ? "#{date_string} ago" : "in #{date_string}"
+      diff >= 0 ? "#{date_string} 前" : "在 #{date_string}"
     end
 
   private
@@ -18,25 +18,25 @@ module RelativeTime
 
     def resolution(diff)
       if diff >= YEAR
-        [(diff / YEAR).round, 'years']
+        [(diff / YEAR).round, '年']
       elsif diff >= MONTH
-        [(diff / MONTH).round, 'months']
+        [(diff / MONTH).round, '月']
       elsif diff >= WEEK
-        [(diff / WEEK).round, 'weeks']
+        [(diff / WEEK).round, '周']
       elsif diff >= DAY
-        [(diff / DAY).round, 'days']
+        [(diff / DAY).round, '天']
       elsif diff >= HOUR
-        [(diff / HOUR).round, 'hours']
+        [(diff / HOUR).round, '小时']
       else
-        [(diff / MINUTE).round, 'minutes']
+        [(diff / MINUTE).round, '分钟']
       end
     end
 
     def verb_agreement(resolution)
-      if resolution[0] == 1 && resolution.last == 'hours'
-        'an hour'
+      if resolution[0] == 1 && resolution.last == '消息'
+        '小时'
       elsif resolution[0] == 1
-        "a #{resolution.last[0...-1]}"
+        resolution.last[0...-1]
       else
         resolution.join(' ')
       end
